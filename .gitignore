@@ -1,0 +1,12 @@
+*
+
+!.gitignore
+
+!i3
+!i3/*
+!nvim
+!nvim/*
+!polybar
+!polybar/*
+!alacritty
+!alacritty/*
