@@ -5,7 +5,7 @@
 !i3
 !i3/*
 !nvim
-!nvim/*
+!nvim/**
 !polybar
 !polybar/*
 !alacritty
