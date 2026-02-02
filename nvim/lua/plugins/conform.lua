@@ -20,7 +20,6 @@ return {
       -- Use the "_" filetype to run formatters on filetypes that don't
       -- have other formatters configured.
       ['_'] = { 'trim_whitespace' },
-
       sh = { 'shfmt' },
       bash = { 'shfmt' },
     },
@@ -31,11 +30,25 @@ return {
     -- If this is set, Conform will run the formatter on save.
     -- It will pass the table to conform.format().
     -- This can also be a function that returns the table.
-    format_on_save = {
-      -- I recommend these options. See :help conform.format for details.
-      lsp_format = 'never',
-      timeout_ms = 2000,
-    },
+    format_on_save = function(bufr)
+      local ft = vim.bo[bufr].filetype
+
+      if ft == 'java' then
+        return {
+          lsp_format = 'prefer',
+          timeout_ms = 2000,
+          filter = function(client)
+            return client.name == 'jdtls'
+          end,
+        }
+      end
+
+      return {
+        lsp_format = 'never',
+        timeout_ms = 2000,
+      }
+    end,
+    -- I recommend these options. See :help conform.format for details.
     -- If this is set, Conform will run the formatter asynchronously after save.
     -- It will pass the table to conform.format().
     -- This can also be a function that returns the table.

@@ -67,7 +67,16 @@ return { -- Autocompletion
           luasnip.lsp_expand(args.body)
         end,
       },
-      completion = { completeopt = 'menu,menuone,noinsert' },
+      completion = {
+        completeopt = 'menu,menuone,noinsert',
+        -- ADDED: Auto-trigger completion more aggressively
+        -- autocomplete = {
+        --   require('cmp.types').cmp.TriggerEvent.TextChanged,
+        -- },
+      },
+      -- experimental = {
+      --   ghost_text = true,
+      -- },
       -- window = {
       --     completion = cmp.config.window.bordered(),
       --     documentation = cmp.config.window.bordered(),
