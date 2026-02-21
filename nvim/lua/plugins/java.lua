@@ -2,79 +2,21 @@ return {
   'nvim-java/nvim-java',
   dependencies = {
     'mfussenegger/nvim-dap',
-    {
-      'JavaHello/spring-boot.nvim',
-      ft = { 'java', 'yaml', 'jproperties' },
-    },
     'MunifTanjim/nui.nvim',
   },
   config = function()
     require('java').setup {
-      -- make sure these are enabled (they are by default, but explicit is nice)
       java_test = { enable = true },
       java_debug_adapter = { enable = true },
     }
-    require('spring_boot').init_lsp_commands()
 
-    local home = vim.env.HOME
-    local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
-    local workspace_dir = home .. '/.local/share/nvim/jdtls-workspace/' .. project_name
-    vim.lsp.config('jdtls', {
-      settings = {
-        java = {
-          home = '/opt/jdk-21',
-          configuration = {
-            runtimes = {
-              { name = 'JavaSE-21', path = '/opt/jdk-21', default = true },
-              { name = 'JavaSE-22', path = '/opt/jdk-22' },
-              { name = 'JavaSE-25', path = '/opt/jdk-25' },
-            },
-          },
-          maven = { downloadSources = true },
-          implementationsCodeLens = { enabled = true },
-          referencesCodeLens = { enabled = true },
-          references = { includeDecompiledSources = true },
-          signatureHelp = { enabled = true },
-          format = {
-            enabled = true,
-            settings = {
-              url = 'https://github.com/google/styleguide/blob/gh-pages/intellij-java-google-style.xml',
-              profile = 'GoogleStyle',
-            },
-          },
-          contentProvider = { preffered = 'fernflower' },
-          completion = {
-            chain = { enabled = true },
-            favoriteStaticMembers = {
-              'org.hamcrest.MatcherAssert.assertThat',
-              'org.hamcrest.Matchers.*',
-              'org.hamcrest.CoreMatchers.*',
-              'org.junit.jupiter.api.Assertions.*',
-              'java.util.Objects.requireNonNull',
-              'java.util.Objects.requireNonNullElse',
-              'org.mockito.Mockito.*',
-              'org.springframework.test.web.servlet.result.MockMvcResultMatchers.*',
-              'org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*',
-            },
-            maxResults = 0,
-            guessMethodArguments = true,
-            postfix = { enabled = true },
-          },
-          sources = {
-            organizeImports = {
-              starThreshold = 9999,
-              staticStarThreshold = 9999,
-            },
-          },
-          codeGeneration = {
-            toString = {
-              template = '${object.className}{${member.name()}=${member.value}, ${otherMembers}}',
-            },
-            hashCodeEquals = { useJava7Objects = true },
-            useBlocks = true,
-          },
-        },
-      },
+    vim.api.nvim_create_autocmd('LspAttach', {
+      callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if client and client.name == 'jdtls' then
+          require('spring_boot').init_lsp_commands()
+        end
+      end,
     })
     vim.api.nvim_create_autocmd('FileType', {
       pattern = 'java',

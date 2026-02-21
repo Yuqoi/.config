@@ -22,26 +22,27 @@ return {
       ['_'] = { 'trim_whitespace' },
       sh = { 'shfmt' },
       bash = { 'shfmt' },
+      java = { 'google-java-format' },
     },
 
-    default_format_opts = {
-      lsp_format = 'fallback',
-    },
+    -- default_format_opts = {
+    --   lsp_format = 'fallback',
+    -- },
     -- If this is set, Conform will run the formatter on save.
     -- It will pass the table to conform.format().
     -- This can also be a function that returns the table.
     format_on_save = function(bufr)
       local ft = vim.bo[bufr].filetype
-
-      if ft == 'java' then
-        return {
-          lsp_format = 'prefer',
-          timeout_ms = 2000,
-          filter = function(client)
-            return client.name == 'jdtls'
-          end,
-        }
-      end
+      --
+      -- if ft == 'java' then
+      --   return {
+      --     lsp_format = 'fallback',
+      --     timeout_ms = 1000,
+      --     filter = function(client)
+      --       return client.name == 'jdtls'
+      --     end,
+      --   }
+      -- end
 
       return {
         lsp_format = 'never',
