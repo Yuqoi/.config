@@ -6,7 +6,7 @@ return {
   opts = {
     preview = {
       enable = false,
-      icon_provider = 'mini', -- "internal" | "mini" | "devicons"
+      icon_provider = 'internal', -- "internal" | "mini" | "devicons"
     },
   },
   config = function()

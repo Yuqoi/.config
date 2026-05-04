@@ -23,6 +23,7 @@ return {
       sh = { 'shfmt' },
       bash = { 'shfmt' },
       java = { 'google-java-format' },
+      c = { 'clang-format' },
     },
 
     -- default_format_opts = {

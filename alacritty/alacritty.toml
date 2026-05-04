@@ -1,3 +1,7 @@
+import = [
+    "~/.config/alacritty/themes/themes/alabaster_dark.toml"
+]
+
 [window]
 opacity = 0.8
 padding = { x = 10, y = 10}
@@ -10,4 +14,4 @@ normal = {family = "JetBrainsMono NF", style="Regular"}
 bold = {family = "JetBrainsMono NF", style="Bold"}
 italic = {family = "JetBrainsMono NF", style="Italic"}
 bold_italic = {family = "JetBrainsMono NF", style="BoldItalic"}
-size = 10.0
+size = 6.0
